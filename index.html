@@ -1,0 +1,146 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="An offline psychology workspace for exploring and interpreting z scores. Record your observations in a separate paper for Canvas.">
+<title>Lab 3: Z-Score Explorer</title>
+<style>
+:root{color-scheme:light;--ink:#183b3b;--muted:#526767;--teal:#08776e;--orange:#a44716;--line:#d5e1dc;--paper:#fffefa;--wash:#edf4ef}*{box-sizing:border-box}body{margin:0;background:#f3f5ef;color:var(--ink);font:16px/1.55 system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}button,input,select{font:inherit}button,select,input[type=number]{min-height:44px;border:1px solid #8fa9a1;border-radius:8px;background:white;color:var(--ink)}button{padding:9px 14px;cursor:pointer;font-weight:650}button:hover{background:#e5f1eb;border-color:var(--teal)}button.primary{background:var(--teal);border-color:var(--teal);color:white}button:disabled{cursor:default;opacity:.55}a{color:var(--teal)}:focus-visible{outline:3px solid #a44716;outline-offset:3px}.skip{position:absolute;left:12px;top:-100px;z-index:10;background:white;padding:12px}.skip:focus{top:10px}.shell{max-width:1440px;margin:auto;padding:28px 32px}.mast{display:flex;align-items:center;gap:12px;font-size:.76rem;letter-spacing:.15em;text-transform:uppercase;font-weight:750}.mark{display:grid;place-items:center;background:var(--ink);color:white;width:34px;height:34px;border-radius:50%;font:italic 24px Georgia,serif}h1{font:normal clamp(2rem,4vw,3.2rem)/1.12 Georgia,serif;margin:18px 0 12px;letter-spacing:-.035em}h2{font-size:1.18rem;line-height:1.3;margin:0 0 12px}h3{font-size:1rem;margin:0 0 8px}p{margin:0 0 12px}.intro{max-width:850px;color:var(--muted)}.layout{display:grid;grid-template-columns:minmax(0,1fr) 310px;gap:24px;margin-top:24px;align-items:start}.workspace{min-width:0}.card{background:var(--paper);border:1px solid var(--line);border-radius:16px;padding:22px;margin-bottom:18px}.card-head{display:flex;align-items:start;justify-content:space-between;gap:16px}.eyebrow{font-size:.72rem;letter-spacing:.12em;text-transform:uppercase;font-weight:750;color:var(--teal);margin-bottom:8px}.muted,.hint{color:var(--muted)}.hint{font-size:.84rem}.toolbar{display:flex;gap:8px;flex-wrap:wrap}.scenario-select{width:100%;padding:8px 12px;margin:6px 0 8px}.graph{width:100%;height:auto;display:block;margin:10px 0 2px}.legend{display:flex;gap:18px;flex-wrap:wrap;font-size:.84rem}.legend span{display:flex;align-items:center;gap:7px}.key{display:inline-block;width:18px;border-top:3px dashed var(--teal)}.key.score{border-top:3px solid var(--orange)}.result{display:grid;grid-template-columns:150px 1fr;gap:20px;align-items:center;background:var(--wash);border-radius:12px;padding:18px;margin-top:16px}.zvalue{font-size:2.3rem;line-height:1.2;font-weight:750;font-variant-numeric:tabular-nums}.formula{font-size:.88rem;margin:5px 0 0}.result p:last-child{margin-bottom:0}.controls{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:18px;margin-top:20px}.control{min-width:0}.control label{display:block;font-weight:700;margin-bottom:7px}.control input[type=number]{width:100%;padding:7px 10px;font-variant-numeric:tabular-nums}.control input[type=range]{display:block;accent-color:var(--teal);width:100%;min-height:36px;margin:7px 0 0;cursor:pointer}.bounds{font-size:.75rem;color:var(--muted);display:flex;justify-content:space-between}.error{color:#9f271b;font-size:.85rem;min-height:1.3em;margin-top:8px}.explore-note{border-left:3px solid var(--teal);padding-left:12px;font-size:.9rem;margin-top:8px}.challenge{background:#e8f1eb;border-color:#c7dbcf}.challenge select{width:100%;padding:8px 10px;margin-bottom:16px}.challenge p{font-size:.94rem}.challenge .toolbar{margin:14px 0 8px}.status{font-size:.86rem;min-height:1.5em;margin-top:12px;font-weight:600}.baseline{font-size:.85rem;background:white;padding:10px 12px;border-radius:8px;margin-top:12px}.baseline:empty{display:none}.table-wrap{overflow-x:auto;margin-top:14px}table{border-collapse:collapse;width:100%;font-size:.85rem}th,td{text-align:left;padding:9px 10px;border-bottom:1px solid #c5d9ce;white-space:nowrap}th:first-child,td:first-child{white-space:normal}caption{text-align:left;font-size:.82rem;padding-bottom:6px;color:var(--muted)}.sidebar{position:sticky;top:18px;background:var(--ink);color:#f2f7f2;padding:24px;border-radius:16px;max-height:calc(100vh - 36px);overflow:auto}.sidebar .eyebrow{color:#b4d6c0}.sidebar p{font-size:.85rem;color:#d8e7df}.prompts{list-style:none;padding:0;margin:18px 0}.prompts li{padding:12px 0;border-top:1px solid #466361}.prompts a{color:white;text-decoration:none;font-size:.87rem;font-weight:700;display:block;margin-bottom:4px}.prompts a:hover{text-decoration:underline}.prompts p{font-size:.8rem;line-height:1.5;margin:0}.sidebar strong{color:white}.mobile-link{display:none}.foot{font-size:.8rem;color:var(--muted);margin:20px 0 10px}.instruction{background:#faf4e6;border:1px solid #e1d2b1;padding:12px 16px;border-radius:10px;font-size:.88rem;margin-top:18px}.sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}[hidden]{display:none!important}#explorer,#guided,#paper-prompts{scroll-margin-top:16px}noscript{display:block;padding:20px;color:#9f271b;background:white}
+@media(max-width:1050px){.shell{padding:22px 20px}.layout{grid-template-columns:minmax(0,1fr) 270px;gap:16px}.card{padding:18px}.sidebar{padding:20px}.controls{gap:10px}.result{grid-template-columns:125px 1fr;gap:12px}}
+@media(max-width:780px){.layout{grid-template-columns:1fr}.sidebar{position:static;max-height:none}.mobile-link{display:block;position:sticky;top:0;z-index:5;background:var(--ink);color:white;padding:10px 16px;text-align:center;border-radius:8px;margin-top:16px}.shell{padding:20px 14px}.controls{grid-template-columns:1fr}.control{display:grid;grid-template-columns:1fr 110px;align-items:center;column-gap:16px}.control input[type=range],.bounds{grid-column:1/-1}.control label{margin:0}.card-head{flex-wrap:wrap}.result{grid-template-columns:1fr}.zvalue{font-size:2rem}.graph{min-height:190px}.sidebar{margin-bottom:18px}h1{font-size:2.25rem}}
+@media print{body{background:white}.shell{padding:0}.layout{display:block}.sidebar{position:static;max-height:none;background:white;color:black}.sidebar p,.sidebar strong,.prompts a,.sidebar .eyebrow{color:black}.mobile-link,.toolbar,.controls,.skip{display:none}.card,.sidebar{break-inside:avoid}.graph{max-height:260px}}
+</style>
+</head>
+<body>
+<a class="skip" href="#explorer">Skip to the explorer</a>
+<div class="shell">
+<header><div class="mast"><span class="mark" aria-hidden="true">z</span>Behavioral Statistics · Interactive Lab</div><h1>Lab 3: Z-Score Explorer</h1><p class="intro">Where does a score stand? Explore psychological measures, change the comparison group, and use standard deviations to make sense of the difference.</p><div class="instruction"><strong>Your workspace, your observations.</strong> Use this tool to explore. Record values and explanations in a separate paper organized into Parts 1–7, then submit it in Canvas. This page does not collect, save, or submit answers.</div></header>
+<a class="mobile-link" href="#paper-prompts">View Parts 1–7 paper prompts ↓</a>
+<div class="layout"><main class="workspace">
+<section class="card" id="explorer" aria-labelledby="explorer-title">
+<div class="card-head"><div><div class="eyebrow">01 / Explore a distribution</div><h2 id="explorer-title">A score needs a reference point.</h2></div><div class="toolbar"><button id="reset" type="button">Reset scenario</button><button id="random" type="button">Randomize X</button></div></div>
+<label for="scenario"><strong>Psychological measure</strong></label><select id="scenario" class="scenario-select"><option value="memory">Memory recall · words recalled</option><option value="attention">Attention · task score</option><option value="reaction">Reaction time · milliseconds</option><option value="stress">Perceived stress · scale score</option></select>
+<p id="scenario-note" class="hint"></p><div class="legend"><span><i class="key" aria-hidden="true"></i>Dashed line: mean μ</span><span><i class="key score" aria-hidden="true"></i>Solid line + dot: raw score X</span></div>
+<svg id="plot" class="graph" viewBox="0 0 760 280" role="img" aria-labelledby="plot-title plot-desc"><title id="plot-title">Score location within an illustrative normal curve</title><desc id="plot-desc"></desc><g id="drawing"></g></svg>
+<p class="hint">Horizontal axis: raw scores. Tick labels show μ and steps of 1 SD. The view expands when needed; curve height is rescaled for readability. This bell curve is illustrative—z scores do not require normally distributed data.</p>
+<div class="result"><div><div class="eyebrow">Standardized score</div><div id="z" class="zvalue"></div><div class="formula">z = (X − μ) / σ</div></div><div><p id="calculation" class="formula"></p><p id="interpretation"></p><p id="context" class="hint"></p></div></div>
+<div class="controls">
+<div class="control"><label for="x-number">Raw score <span aria-hidden="true">X</span></label><input id="x-number" type="number" step="0.1" aria-describedby="input-help error"><input id="x-range" type="range" step="0.1" aria-label="Raw score X slider" aria-describedby="input-help"><div class="bounds" id="x-bounds"></div></div>
+<div class="control"><label for="mu-number">Mean <span aria-hidden="true">μ</span></label><input id="mu-number" type="number" step="0.1" aria-describedby="input-help error"><input id="mu-range" type="range" step="0.1" aria-label="Mean mu slider" aria-describedby="input-help"><div class="bounds" id="mu-bounds"></div></div>
+<div class="control"><label for="sd-number">Standard deviation <span aria-hidden="true">σ</span></label><input id="sd-number" type="number" step="0.1" aria-describedby="input-help error"><input id="sd-range" type="range" step="0.1" aria-label="Standard deviation sigma slider" aria-describedby="input-help"><div class="bounds" id="sd-bounds"></div></div>
+</div><div id="error" class="error" role="alert"></div><p id="input-help" class="hint">Use the sliders, arrow keys, or typed numbers. σ must be greater than 0. For a participant’s word count, choose a whole number. All measures and reference groups are fictional teaching examples.</p>
+<div class="explore-note"><strong>Change one thing. Watch what happens.</strong> First predict, then change X, μ, or σ. Compare the sign, distance from the mean, and size of z. Keep the other two values fixed to isolate an effect.</div>
+<div id="live" class="sr-only" aria-live="polite" aria-atomic="true"></div>
+</section>
+<section class="card challenge" id="guided" aria-labelledby="guided-title"><div class="eyebrow">02 / Guided investigation</div><h2 id="guided-title">Try it. Record it. Explain it.</h2><label for="part" class="sr-only">Choose an assignment part</label><select id="part"><option value="1">Part 1 · Explore a z Score</option><option value="2">Part 2 · Change the Distribution</option><option value="3">Part 3 · Same Score, Different Meaning</option><option value="4">Part 4 · Compare Psychological Measures</option><option value="5">Part 5 · Does Negative Mean Bad?</option><option value="6">Part 6 · Experiment</option><option value="7">Part 7 · Data-to-Decision</option></select><h3 id="challenge-title"></h3><p id="challenge-text"></p><div id="challenge-actions" class="toolbar"></div><div id="comparison" class="table-wrap"></div><div id="baseline" class="baseline"></div><p id="challenge-status" class="status" role="status"></p><div class="toolbar"><button id="new-challenge" type="button">New practice challenge</button><button id="reset-lab" type="button">Reset whole lab</button></div><p id="practice" class="hint" role="status">Optional practice: try a new prompt after completing an assignment part.</p></section>
+<p class="foot">Works offline in a browser. No account or internet connection needed. Refreshing or closing the page clears the current exploration. Copy your values into your paper before leaving.</p>
+</main>
+<aside class="sidebar" id="paper-prompts" aria-labelledby="paper-title"><div class="eyebrow">03 / Your Canvas paper</div><h2 id="paper-title">Keep the evidence.<br>Explain the meaning.</h2><p>Use these seven headings in your paper. Record the measure, X, μ, σ, and z for each trial you discuss. Report z to two decimal places.</p><ol class="prompts">
+<li><a href="#guided" data-part="1">Part 1 · Explore a z Score</a><p>Start with memory: X = 35, μ = 30, σ = 5. Interpret the sign and number of SDs away. Choose X below μ, record it, and explain what changed.</p></li>
+<li><a href="#guided" data-part="2">Part 2 · Change the Distribution</a><p>Start with X = 38, μ = 30, σ = 5. Keep X and μ fixed; choose a different σ. Record both z scores. Why did z change when X did not?</p></li>
+<li><a href="#guided" data-part="3">Part 3 · Same Score, Different Meaning</a><p>Memory X = 60 in both studies. A: μ = 50, σ = 10. B: μ = 58, σ = 4. Calculate both z scores. Does the same raw score mean the same relative standing?</p></li>
+<li><a href="#guided" data-part="4">Part 4 · Compare Psychological Measures</a><p>Maya’s memory: 38, 30, 5. Attention: 88, 70, 10 (X, μ, σ). Which is farther above its mean? Why can’t 38 and 88 alone answer this?</p></li>
+<li><a href="#guided" data-part="5">Part 5 · Does Negative Mean Bad?</a><p>Reaction time: 325, 400, 50. Stress: 30, 20, 5 (X, μ, σ). Interpret each z. Evaluate “negative means poor performance” and “positive means desirable.”</p></li>
+<li><a href="#guided" data-part="6">Part 6 · Experiment</a><p>Create +1.25 ≤ z ≤ +2.25 and record all values. Change only one value to reach −0.50 ≤ z ≤ +0.50. Record your new values and explain why z moved toward zero.</p></li>
+<li><a href="#guided" data-part="7">Part 7 · Data-to-Decision</a><p>A’s memory: 42, 30, 6. B’s attention: 94, 70, 10 (X, μ, σ). Evaluate: “B is more unusual because 94 is much larger than 42.” Assess the conclusion and reasoning separately; use z scores as evidence.</p></li>
+</ol><p><strong>Before submitting:</strong> Include your own chosen values and observations, explain changes in context, and follow your instructor’s paper requirements. Submit the separate paper in Canvas.</p><a href="#explorer" style="color:#c0e6d0">Back to the explorer ↑</a></aside>
+</div></div><noscript>This explorer requires JavaScript. Enable JavaScript in your browser to use the controls and calculations. The paper prompts remain available above.</noscript>
+<script>
+'use strict';
+const $ = id => document.getElementById(id);
+const measures = {
+ memory:{name:'Memory recall',unit:'words',x:35,mu:30,sd:5,min:0,max:100,sdMax:50,note:'Number of words correctly recalled. Higher scores mean more words recalled; interpret performance relative to the specified group.'},
+ attention:{name:'Attention',unit:'points',x:88,mu:70,sd:10,min:0,max:150,sdMax:75,note:'A fictional attention task score. Higher scores indicate greater accuracy on this task.'},
+ reaction:{name:'Reaction time',unit:'ms',x:325,mu:400,sd:50,min:100,max:1000,sdMax:300,note:'Time taken to respond in milliseconds. Lower scores mean faster responses; speed alone does not establish accuracy.'},
+ stress:{name:'Perceived stress',unit:'points',x:30,mu:20,sd:5,min:0,max:80,sdMax:40,note:'A fictional self-report stress score. Higher scores mean more reported stress, not better performance.'}
+};
+let state={key:'memory',x:35,mu:30,sd:5},baseline=null,announceTimer;
+const format=n=>Number(n.toFixed(2)).toString();
+const signed=n=>(n>0?'+':n<0?'−':'')+Math.abs(n).toFixed(2);
+const zOf=s=>(s.x-s.mu)/s.sd;
+const same=(a,b)=>Math.abs(a-b)<1e-8;
+function sync(){
+ const m=measures[state.key]; $('scenario').value=state.key; $('scenario-note').textContent=m.note;
+ for(const k of ['x','mu','sd']){const low=k==='sd'?0.1:m.min, high=k==='sd'?m.sdMax:m.max;for(const type of ['number','range']){const el=$(k+'-'+type);el.min=low;el.max=high;el.value=state[k];el.removeAttribute('aria-invalid');}$(k+'-bounds').innerHTML='<span>'+low+'</span><span>'+high+'</span>';}
+ $('error').textContent='';render();
+}
+function load(key,x,mu,sd){state={key,x,mu,sd};sync();}
+function render(){
+ const m=measures[state.key],z=zOf(state),direction=z>0?'above':'below';
+ $('z').textContent='z = '+signed(z);
+ $('calculation').textContent='('+format(state.x)+' − '+format(state.mu)+') ÷ '+format(state.sd)+' = '+signed(z);
+ const interpretation=z===0?'This '+m.name.toLowerCase()+' score equals the mean: 0 standard deviations away.':'This '+m.name.toLowerCase()+' score is '+Math.abs(z).toFixed(2)+' standard deviation'+(Math.abs(z)===1?'':'s')+' '+direction+' the mean.';
+ $('interpretation').textContent=interpretation;
+ let context='The sign describes direction; the magnitude describes distance in SD units.';
+ if(state.key==='reaction')context=z<0?'Below-average time means a faster response. A negative z score does not mean poor performance.':z>0?'Above-average time means a slower response. Positive does not automatically mean better.':'This response time matches the group mean.';
+ if(state.key==='stress')context=z>0?'This participant reports more stress than the group mean. Positive does not mean desirable.':z<0?'This participant reports less stress than the group mean. Negative does not mean bad.':'This stress score matches the group mean.';
+ $('context').textContent=context;
+ draw();updateChallengeStatus();clearTimeout(announceTimer);announceTimer=setTimeout(()=>{$('live').textContent='X '+format(state.x)+', mean '+format(state.mu)+', standard deviation '+format(state.sd)+'. z equals '+signed(z)+'. '+interpretation+' '+context;},250);
+}
+function draw(){
+ const m=measures[state.key],{x,mu,sd}=state;
+ const lo=Math.min(m.min,mu-4*sd,x-sd*.25),hi=Math.max(m.max,mu+4*sd,x+sd*.25);
+ const px=v=>48+(v-lo)/(hi-lo)*664,py=v=>210-146*Math.exp(-.5*((v-mu)/sd)**2);
+ let points=[];for(let i=0;i<=320;i++){const v=mu-4*sd+8*sd*i/320;points.push(px(v).toFixed(2)+','+py(v).toFixed(2));}
+ let svg='<path d="M '+px(mu-4*sd)+' 210 L '+points.join(' L ')+' L '+px(mu+4*sd)+' 210 Z" fill="#d8e9df"/><polyline points="'+points.join(' ')+'" fill="none" stroke="#08776e" stroke-width="3"/><line x1="48" x2="712" y1="210" y2="210" stroke="#617a73"/>';
+ const spacing=px(mu+sd)-px(mu);const ticks=spacing<15?[0]:spacing<44?[-3,0,3]:[-3,-2,-1,0,1,2,3];
+ for(const n of ticks){const at=px(mu+n*sd);svg+='<line x1="'+at+'" x2="'+at+'" y1="210" y2="216" stroke="#617a73"/><text x="'+at+'" y="234" text-anchor="middle" font-size="12" fill="#365951">'+format(mu+n*sd)+'</text><text x="'+at+'" y="251" text-anchor="middle" font-size="11" fill="#526767">'+(n===0?'μ':(n>0?'+':'−')+Math.abs(n)+' SD')+'</text>';}
+ const xp=px(x),mp=px(mu);
+ svg+='<line x1="'+mp+'" x2="'+mp+'" y1="50" y2="210" stroke="#08776e" stroke-width="2" stroke-dasharray="5 5"/><text x="'+mp+'" y="24" text-anchor="middle" font-size="14" font-weight="700" fill="#08776e">μ = '+format(mu)+'</text>';
+ svg+='<line x1="'+xp+'" x2="'+xp+'" y1="49" y2="210" stroke="#a44716" stroke-width="3"/><circle cx="'+xp+'" cy="'+py(x)+'" r="6" fill="#a44716" stroke="white" stroke-width="2"/><text x="'+Math.max(84,Math.min(676,xp))+'" y="43" text-anchor="middle" font-size="14" font-weight="700" fill="#a44716">X = '+format(x)+'</text><text x="380" y="275" text-anchor="middle" font-size="12" fill="#365951">'+m.name+' ('+m.unit+')</text>';
+ $('drawing').innerHTML=svg;$('plot-desc').textContent=m.name+' illustrative bell curve centered at '+mu+' '+m.unit+', with standard deviation '+sd+'. Raw score '+x+' is at z = '+signed(zOf(state))+'. Horizontal view runs from '+format(lo)+' to '+format(hi)+'.';
+}
+const parts={
+ 1:{title:'Above, below, and how far?',text:'Load the starting memory score. Interpret its sign and distance in SD units, then choose a raw score below the mean. Keep μ and σ fixed. Record both trials in your paper.',trials:[['Starting memory','memory',35,30,5]]},
+ 2:{title:'Keep the score. Change the spread.',text:'Load memory X = 38, μ = 30, σ = 5. Record z. Change only σ to a different positive value. Predict how increasing or decreasing the spread will affect the distance measured in SDs.',trials:[['Part 2 starting values','memory',38,30,5]]},
+ 3:{title:'Two groups, the same 60 words.',text:'Compare the same memory score across two reference groups. Load each study and use its z score to explain the participant’s relative standing. These are different studies with different reference distributions.',trials:[['Study A','memory',60,50,10],['Study B','memory',60,58,4]]},
+ 4:{title:'Maya: memory or attention?',text:'Maya scores 38 on memory and 88 on attention. Load each measure. Which score is farther above its own mean? Explain why the raw numbers alone cannot establish relative standing.',trials:[['Maya · memory','memory',38,30,5],['Maya · attention','attention',88,70,10]]},
+ 5:{title:'A sign is not a value judgment.',text:'Load the reaction-time and stress scenarios. Evaluate a student’s claim that a negative z score means poor performance. Then decide whether a positive stress z score describes a desirable outcome. Explain what each scale measures.',trials:[['Reaction time','reaction',325,400,50],['Stress','stress',30,20,5]]},
+ 6:{title:'Build a score, then bring it toward zero.',text:'Choose your own values so +1.25 ≤ z ≤ +2.25. Record them in your paper, then use “Set starting point” to hold a temporary comparison. Change only one of X, μ, or σ to reach −0.50 ≤ z ≤ +0.50. Keep the same psychological measure.',trials:[]},
+ 7:{title:'Right conclusion? Sound reasoning?',text:'A research assistant says: “Participant B’s score is more unusual because 94 is much larger than 42.” Compare distance from the mean in SD units (|z|). Assess the conclusion and the reasoning separately. Here, “more unusual” means farther from the reference mean in SD units; percentile comparisons require distribution information.',trials:[['A · memory','memory',42,30,6],['B · attention','attention',94,70,10]]}
+};
+function showPart(){
+ const p=parts[$('part').value];$('challenge-title').textContent=p.title;$('challenge-text').textContent=p.text;$('challenge-actions').replaceChildren();
+ for(const trial of p.trials){const button=document.createElement('button');button.type='button';button.textContent='Load '+trial[0];button.addEventListener('click',()=>{load(...trial.slice(1));$('challenge-status').textContent=trial[0]+' loaded into the explorer. Record the values before making changes.';});$('challenge-actions').append(button);}
+ if($('part').value==='6'){
+  const set=document.createElement('button');set.type='button';set.id='set-start';set.className='primary';set.textContent='Set starting point';set.addEventListener('click',()=>{if(zOf(state)>=1.25&&zOf(state)<=2.25){baseline={...state};updateChallengeStatus();}});$('challenge-actions').append(set);
+  const clear=document.createElement('button');clear.type='button';clear.textContent='Clear starting point';clear.addEventListener('click',()=>{baseline=null;updateChallengeStatus();});$('challenge-actions').append(clear);
+ }
+ $('comparison').innerHTML=p.trials.length>1?'<table><caption>Original reference scenarios · use the explorer above to calculate each z.</caption><thead><tr><th scope="col">Scenario</th><th scope="col">X</th><th scope="col">μ</th><th scope="col">σ</th></tr></thead><tbody>'+p.trials.map(t=>'<tr><th scope="row">'+t[0]+'</th><td>'+t[2]+'</td><td>'+t[3]+'</td><td>'+t[4]+'</td></tr>').join('')+'</tbody></table>':'';
+ updateChallengeStatus();
+}
+function updateChallengeStatus(){
+ $('baseline').textContent='';
+ if($('part').value!=='6'){$('challenge-status').textContent='Load a scenario to begin, then use the controls above. Selecting a part alone keeps your current values.';return;}
+ const z=zOf(state),inRange=z>=1.25&&z<=2.25;
+ if($('set-start'))$('set-start').disabled=!inRange;
+ if(!baseline){$('challenge-status').textContent=inRange?'Target reached. Record these values, then set your starting point.':'First target: create a z score from +1.25 to +2.25, including endpoints.';return;}
+ $('baseline').textContent='Temporary starting point: '+measures[baseline.key].name+' · X = '+format(baseline.x)+' · μ = '+format(baseline.mu)+' · σ = '+format(baseline.sd)+' · z = '+signed(zOf(baseline))+'. Copy this into your paper; it is not saved.';
+ const changed=['x','mu','sd'].filter(k=>!same(state[k],baseline[k]));
+ $('challenge-status').textContent=state.key!==baseline.key?'Return to '+measures[baseline.key].name+' to compare with your starting point.':changed.length===1&&Math.abs(z)<=.5?'Target reached with exactly one changed value. Record your new values and explain why z moved toward zero.':changed.length>1?'More than one value differs from the starting point. Restore all but one value.':'Now change exactly one value to reach z between −0.50 and +0.50.';
+}
+for(const k of ['x','mu','sd']){
+ const number=$(k+'-number'),range=$(k+'-range');
+ number.addEventListener('input',()=>{
+  const value=number.valueAsNumber;
+  if(!Number.isFinite(value)||value<Number(number.min)||value>Number(number.max)){
+   number.setAttribute('aria-invalid','true');$('error').textContent='Enter '+(k==='sd'?'a positive standard deviation':'a value')+' from '+number.min+' to '+number.max+'. The display retains the last valid value.';return;
+  }
+  number.removeAttribute('aria-invalid');$('error').textContent='';state[k]=value;range.value=value;render();
+ });
+ number.addEventListener('blur',()=>{if(number.getAttribute('aria-invalid')==='true'){number.value=state[k];number.removeAttribute('aria-invalid');$('error').textContent='Invalid entry restored to the last valid value.';}});
+ range.addEventListener('input',()=>{state[k]=Number(range.value);number.value=state[k];number.removeAttribute('aria-invalid');$('error').textContent='';render();});
+}
+$('scenario').addEventListener('change',()=>{const key=$('scenario').value,m=measures[key];load(key,m.x,m.mu,m.sd);});
+$('reset').addEventListener('click',()=>{const m=measures[state.key];load(state.key,m.x,m.mu,m.sd);});
+$('random').addEventListener('click',()=>{const m=measures[state.key];state.x=Math.round(Math.max(m.min,Math.min(m.max,state.mu+(Math.random()*5-2.5)*state.sd))*10)/10;if(state.key==='memory')state.x=Math.round(state.x);sync();});
+$('part').addEventListener('change',showPart);
+document.querySelectorAll('[data-part]').forEach(a=>a.addEventListener('click',()=>{$('part').value=a.dataset.part;showPart();$('part').focus({preventScroll:true});}));
+const practicePrompts=['Keep μ and σ fixed. Create a score below the mean and between 1 and 2 SDs away.','Keep X and μ fixed. Double σ. Explain what happened to |z|.','Create z = 0. What must be true of X and μ?','Keep X fixed. Change only μ until the sign of z changes.','Create z as close as possible to +2.00. Explain the distance in context.','Keep X and μ fixed. Halve σ. Explain why the raw-score distance stays the same while z changes.'];let practiceIndex=-1;
+$('new-challenge').addEventListener('click',()=>{practiceIndex=(practiceIndex+1+Math.floor(Math.random()*(practicePrompts.length-1)))%practicePrompts.length;$('practice').textContent='Practice challenge: '+practicePrompts[practiceIndex]+' Record your own before-and-after values if you discuss this trial in your paper.';});
+$('reset-lab').addEventListener('click',()=>{baseline=null;$('part').value='1';showPart();load('memory',35,30,5);$('practice').textContent='Optional practice: try a new prompt after completing an assignment part.';});
+showPart();sync();
+</script>
+</body>
+</html>
